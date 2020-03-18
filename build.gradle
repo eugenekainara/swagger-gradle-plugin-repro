@@ -1,0 +1,36 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.5.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id "io.swagger.core.v3.swagger-gradle-plugin" version "2.1.1"
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.2.33'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+resolve {
+	outputFileName = 'swagger'
+	outputFormat = 'JSONANDYAML'
+	prettyPrint = 'TRUE'
+	classpath = sourceSets.main.output
+	resourceClasses = ['com.example.swaggergradleplugin.TestController']
+	outputPath = file("${project.buildDir}")
+}
